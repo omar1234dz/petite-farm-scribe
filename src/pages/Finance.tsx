@@ -1,8 +1,10 @@
-import { Plus, TrendingUp, TrendingDown, Wallet } from "lucide-react";
+import { useState } from "react";
+import { Plus, TrendingUp, TrendingDown } from "lucide-react";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { BottomNav } from "@/components/layout/BottomNav";
 import { FinanceSummary } from "@/components/finance/FinanceSummary";
 import { Button } from "@/components/ui/button";
+import { AddTransactionForm } from "@/components/forms/AddTransactionForm";
 
 const transactions = [
   { id: "1", date: "2024-01-15", type: "income", category: "حليب", amount: 3500, description: "بيع 10 لتر حليب" },
@@ -21,6 +23,7 @@ const categories = [
 ];
 
 const Finance = () => {
+  const [showAddTransaction, setShowAddTransaction] = useState(false);
   const monthlyIncome = 40000;
   const monthlyExpenses = 15300;
 
@@ -31,7 +34,7 @@ const Finance = () => {
           title="💰 التكاليف والدخل"
           subtitle="الميزانية الشهرية"
           action={
-            <Button size="sm" className="gap-2">
+            <Button size="sm" className="gap-2" onClick={() => setShowAddTransaction(true)}>
               <Plus className="w-4 h-4" />
               إضافة
             </Button>
@@ -93,6 +96,8 @@ const Finance = () => {
       </div>
 
       <BottomNav />
+
+      <AddTransactionForm open={showAddTransaction} onOpenChange={setShowAddTransaction} />
     </div>
   );
 };

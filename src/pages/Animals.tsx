@@ -1,9 +1,11 @@
-import { Plus } from "lucide-react";
+import { useState } from "react";
+import { Plus, Bug, Milk } from "lucide-react";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { BottomNav } from "@/components/layout/BottomNav";
 import { AnimalCard } from "@/components/animals/AnimalCard";
 import { Button } from "@/components/ui/button";
-import { Bug } from "lucide-react";
+import { AddAnimalForm } from "@/components/forms/AddAnimalForm";
+import { AddProductionForm } from "@/components/forms/AddProductionForm";
 
 // Using Bug as a generic animal icon since lucide doesn't have specific farm animals
 const GoatIcon = Bug;
@@ -47,6 +49,9 @@ const animals = [
 ];
 
 const Animals = () => {
+  const [showAddAnimal, setShowAddAnimal] = useState(false);
+  const [showAddProduction, setShowAddProduction] = useState(false);
+
   return (
     <div className="min-h-screen bg-background pb-20">
       <div className="p-4">
@@ -54,10 +59,16 @@ const Animals = () => {
           title="🐐 الحيوانات"
           subtitle="إدارة ومتابعة حيوانات المزرعة"
           action={
-            <Button size="sm" className="gap-2">
-              <Plus className="w-4 h-4" />
-              إضافة
-            </Button>
+            <div className="flex gap-2">
+              <Button size="sm" variant="outline" className="gap-2" onClick={() => setShowAddProduction(true)}>
+                <Milk className="w-4 h-4" />
+                إنتاج
+              </Button>
+              <Button size="sm" className="gap-2" onClick={() => setShowAddAnimal(true)}>
+                <Plus className="w-4 h-4" />
+                إضافة
+              </Button>
+            </div>
           }
         />
 
@@ -114,6 +125,9 @@ const Animals = () => {
       </div>
 
       <BottomNav />
+
+      <AddAnimalForm open={showAddAnimal} onOpenChange={setShowAddAnimal} />
+      <AddProductionForm open={showAddProduction} onOpenChange={setShowAddProduction} />
     </div>
   );
 };
